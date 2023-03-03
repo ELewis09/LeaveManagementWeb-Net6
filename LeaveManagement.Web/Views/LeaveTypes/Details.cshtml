@@ -1,0 +1,35 @@
+﻿@model LeaveTypeVM
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row d-flex justify-content-center">
+    <div class="col-8">
+        <h1>Details of @Model.Name</h1>
+        <hr />
+        <div>
+            <dl class="row">
+                <dt class = "col-sm-6">
+                @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class = "col-sm-4">
+                @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class = "col-sm-6">
+                @Html.DisplayNameFor(model => model.DefaultDays)
+                </dt>
+                <dd class = "col-sm-4">
+                @Html.DisplayFor(model => model.DefaultDays)
+                </dd>
+            </dl>
+          
+        </div>
+        <br />
+        <div>
+            <a asp-action="Index" class="btn btn-dark">Back to List</a>
+            <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.Id">Edit</a>
+        </div>
+    </div>  
+</div>
+
