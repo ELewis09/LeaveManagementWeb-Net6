@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-3"><h3>Leave Types</h3></div>
                 <div class="col-7 pt-1"><p> - Create and manage leave types according to your oraganization</p></div>
-                <div class="col-2"><a asp-action="Create" class="btn btn-primary float-end ">Create</a></div>
+                <div class="col-2"><a asp-action="Create" class="btn btn-primary float-end "><i class="fa-solid fa-plus"></i> Create</a></div>
             </div>
             <div class="row">
                 @foreach (var item in Model)
@@ -18,18 +18,16 @@
                         <div class="card shadow-lg">
                             <div class="card-header text-center ">
                                 <!--<p>@Html.DisplayNameFor(model => model.Name)</p>-->
-                                <h4> @Html.DisplayFor(modelItem => item.Name)</h4>
+                                <h5> @Html.DisplayFor(modelItem => item.Name)</h5>
                             </div>
                             <div class="card-body pt-1 text-center ">
                                 <h4 class="text-danger">@Html.DisplayFor(modelItem => item.DefaultDays)</h4>
                                 @Html.DisplayNameFor(model => model.DefaultDays)
                                 <hr/>
-                                <div class="btn-group shadow-lg">
-                                    <a asp-action="Edit" class="btn btn-white text-dark" asp-route-id="@item.Id"><i class="fa-thin fa-pen-to-square"></i>E</a>
-                                    <a asp-action="Details" class="btn btn-white text-dark" asp-route-id="@item.Id">D</a>
+                                <a asp-action="Edit" class="btn btn-white" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square"></i></a>
+                                <a asp-action="Details" class="btn btn-white text-dark" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
                                     <!--<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>-->
-                                    <button class="btn btn-white text-dark deleteBtn" type="button">D</button>
-                                </div>
+                                <button data-id="@item.Id" class="btn btn-white text-dark deleteBtn" type="button"><i class="fa-regular fa-trash-can"></i></button>
                             </div>
                         </div>
                     </div>
@@ -61,9 +59,12 @@
                                 @Html.DisplayFor(modelItem => item.DefaultDays)
                             </td>
                             <td>
-                                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">Edit</a> 
-                                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.Id">Details</a> 
-                                <button class="btn btn-danger deleteBtn" type="button">Delete</button>
+                                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square"></i></a>
+                                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                                <button data-id="@item.Id" class="btn btn-danger deleteBtn" type="button"><i class="fa-regular fa-trash-can"></i></button>
+                                <form id="deleteFrom" asp-action="Delete">
+                                    <input type="hidden" id="leaveTypeId" name="Id">
+                                </form>
                             </td>
                         </tr>
                     }
@@ -87,7 +88,10 @@
                    
                 }).then((confirm) =>{
                     if(confirm){
-                        alert('You said Yes');
+                        var btn = $(this);
+                        var id = btn.data("id");
+                        $('#leaveTypeId').val(id);
+                        $('#deleteFrom').submit();
                     }
                 });
             });
