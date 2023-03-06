@@ -7,11 +7,56 @@
     <div class="row  d-flex justify-content-center">
         <div class="col-10">
             <div class="row">
-                <div class="col-3"><h3>Leave Types</h3></div>
-                <div class="col-7 pt-1"><p> - Create and manage leave types according to your oraganization</p></div>
-                <div class="col-2"><a asp-action="Create" class="btn btn-primary float-end "><i class="fa-solid fa-plus"></i> Create</a></div>
+                <div class="col-3"><h4>Leave Types</h4></div>
+                <div class="col-7 pt-1"><p> -Manage leave types according to your oraganization</p></div>
+                <div class="col-2 btn-group">
+                    <a class="btn btn-white btn-outline-secondary shadow float-end btn-table"><i class="fa-solid fa-table"></i></a>
+                    <a asp-action="Create" class="btn btn-white shadow btn-outline-secondary float-end "><i class="fa-solid fa-plus"></i></a>
+                </div>
             </div>
-            <div class="row">
+            <br class="br-2"/>
+            
+            <br class="br-1"/>
+            <div class="tab-show">
+                <table class="table show-list">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DefaultDays)
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DefaultDays)
+                                </td>
+                                <td class="col-2">
+                                    <a asp-action="Edit" class="btn btn-white" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square"></i></a>
+                                    <a asp-action="Details" class="btn btn-white" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                                    <button data-id="@item.Id" class="btn btn-white deleteBtn" type="button"><i class="fa-regular fa-trash-can"></i></button>
+                                    <form id="deleteFrom" asp-action="Delete">
+                                        <input type="hidden" id="leaveTypeId" name="Id">
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <br class="br-4"/>
+            <br class="br-3"/>
+           
+            <div class="row d-none">
                 @foreach (var item in Model)
                 {
                     <div class="col-lg-3 pt-4">
@@ -23,53 +68,16 @@
                             <div class="card-body pt-1 text-center ">
                                 <h4 class="text-danger">@Html.DisplayFor(modelItem => item.DefaultDays)</h4>
                                 @Html.DisplayNameFor(model => model.DefaultDays)
-                                <hr/>
+                                <hr />
                                 <a asp-action="Edit" class="btn btn-white" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square"></i></a>
                                 <a asp-action="Details" class="btn btn-white text-dark" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
-                                    <!--<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>-->
+                                <!--<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>-->
                                 <button data-id="@item.Id" class="btn btn-white text-dark deleteBtn" type="button"><i class="fa-regular fa-trash-can"></i></button>
                             </div>
                         </div>
                     </div>
                 }
-             </div>
-            <br />
-            <hr />
-            <br />
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Name)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.DefaultDays)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DefaultDays)
-                            </td>
-                            <td>
-                                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square"></i></a>
-                                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
-                                <button data-id="@item.Id" class="btn btn-danger deleteBtn" type="button"><i class="fa-regular fa-trash-can"></i></button>
-                                <form id="deleteFrom" asp-action="Delete">
-                                    <input type="hidden" id="leaveTypeId" name="Id">
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            </div>
         </div>
     </div>
 
@@ -95,6 +103,19 @@
                     }
                 });
             });
+            $(function () {
+            $('.btn-table').click(function () {
+            $('.show-list').toggle()
+            $('div').removeClass("d-none")
+            $('.tab-show').toggle()
+            $('.br-2').toggle()
+            $('.br-1').toggle()
+            $('.br-3').toggle()
+            $('.br-4').toggle()
+            
+        });
+
+    });
         });
     </script>
 }
